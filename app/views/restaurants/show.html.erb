@@ -1,22 +1,23 @@
+<div class="container justify-center" data-controller="insert-in-list" data-insert-in-list-position-value="afterbegin">
 <h1><%= @restaurant.name %> <small><%= @restaurant.address %></small></h1>
 
 <h2><%= pluralize @restaurant.reviews.size, "review" %></h2>
 
-<div>
-  <% if @restaurant.reviews.blank? %>
+<div data-insert-in-list-target="items">
+  <%= render "reviews/form", restaurant: @restaurant, review: @review %>
+<% if @restaurant.reviews.blank? %>
     Be the first to leave a review for <%= @restaurant.name %>
   <% else %>
     <% @restaurant.reviews.each do |review| %>
-      <p><%= review.content %></p>
+      <%= render "restaurants/review" , review: review%>
     <% end %>
   <% end %>
 </div>
 
-<%= simple_form_for([@restaurant, @review]) do |f| %>
-  <%= f.input :content %>
-  <%= f.button :submit %>
-<% end %>
+<%= render "reviews/form", restaurant: @restaurant, review: @review %>
 
-<%= link_to "Back to all restaurants", restaurants_path %>
 
-<%= link_to "Back to all restaurants", restaurants_path %>
+<%= link_to "Back to all restaurants", restaurants_path, class:"btn btn-primary" %>
+
+<%= link_to "Back to all restaurants", restaurants_path, class:"btn btn-primary" %>
+</div>
